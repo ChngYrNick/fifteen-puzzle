@@ -91,6 +91,8 @@ box-shadow: 2px 2px 30px -4px rgba(92,92,92,0.3);
 }
 
 .game {
+  z-index: 99;
+  background-color: white;
   border-radius: 5px;
   border: 1px solid rgb(219, 219, 219);
   padding-top: 30px;
@@ -124,15 +126,197 @@ box-shadow: 2px 2px 30px -4px rgba(92,92,92,0.3);
 
 .win {
   top: 32px;
-  left: 150px;
+  left: 165px;
   position: absolute;
   padding-top: 5px;
   padding-bottom: 5px;
   color: rgb(58, 58, 58);
-  font-size: 18px;
+  font-size: 24px;
   margin-bottom: 20px;
   padding-left: 5px;
 }
 
+.win-pop-out{
+  text-align: center;
+  background-color: #ddd;
+  color: rgb(58, 58, 58);
+  border-radius: 15px;
+  border: 1px solid rgb(219, 219, 219);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  display: flex;
+  z-index: 99999;
+  right: 42px;
+  top: calc(65% - 157px);
+  flex-direction: column;
+  width: 206px;
+  -webkit-box-shadow: 2px 2px 30px -4px rgba(92,92,92,0.4);
+  -moz-box-shadow: 2px 2px 30px -4px rgba(92,92,92,0.4);
+  box-shadow: 2px 2px 30px -4px rgba(92,92,92,0.4);
+}
+
+.win-pop-out--text{
+  font-size: 24px;
+}
+
+.win-pop-out--form--input{
+  text-align: center;
+  outline: none;
+  width: 150px;
+  height: 25px;
+  padding: 12px 20px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.win-pop-out--form--button{
+  border-radius: 3px;
+  border: none;
+  background-color: white;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.score-list{
+  flex-direction: column;
+  width: 260px;
+  height: 382px;
+  border-radius: 5px;
+  border: 1px solid rgb(219, 219, 219);
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 25px;
+  padding-right: 25px;
+  position: absolute;
+  display: flex;
+  margin: 0;
+  top: 40%;
+  left: 17%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.score-list--table{
+  table-layout: fixed;
+  border-collapse: separate;
+  width: 260px;
+  border-spacing: 0;
+}
+
+.score-list--table tbody{
+  font-size: 18px;
+  height: 275px;
+  width:100%;
+  display: block;
+  overflow: auto;
+  border-spacing: 0 7px;
+}
+
+
+.score-list--table thead tr{
+  font-size: 18px;
+  border-bottom: 1px solid rgb(219, 219, 219);
+  display: block;
+}
+
+.score-list--table th, .score-list--table td{
+  padding: 4px;
+}
+
+.score-list--table th:nth-child(1), .score-list--table td:nth-child(1){
+  text-align: center;
+  width:40px;
+}
+.score-list--table th:nth-child(2), .score-list--table td:nth-child(2){
+  text-align: left;
+  padding-left: 20px;
+  width:100px;
+}
+.score-list--table th:nth-child(3), .score-list--table td:nth-child(3){
+  text-align: center;
+  width:120px;
+}
+
+ .score-list--table tbody tr:first-child{
+  background-color: rgba(255, 217, 0);
+}
+.score-list--table tbody tr:nth-child(2){
+  background-color: silver;
+}
+.score-list--table tbody tr:nth-child(3){
+  background-color: #cd7f32;
+} 
+
+.score-list--table tbody td {
+  border: solid 0px;
+  border-style: none solid solid none;
+}
+
+.score-list--table tbody tr:first-child td:first-child { 
+  border-top-left-radius: 20px; 
+  border-bottom-left-radius: 20px; 
+  
+}
+
+.score-list--table tbody tr:first-child td:last-child { 
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px; 
+}
+
+.score-list--table tbody tr:nth-child(2) td:first-child { 
+  border-top-left-radius: 20px; 
+  border-bottom-left-radius: 20px; 
+}
+
+.score-list--table tbody tr:nth-child(2) td:last-child { 
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px; 
+}
+
+.score-list--table tbody tr:nth-child(3) td:first-child { 
+  border-top-left-radius: 20px; 
+  border-bottom-left-radius: 20px; 
+}
+
+.score-list--table tbody tr:nth-child(3) td:last-child { 
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px; 
+}
+
+
+
+.score-list--text{
+  flex-direction: row;
+  background-color: white;
+  color: black;
+  width: 115px;
+  font-size: 30px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  float: left;
+  width: 33.3%;
+}
+
+.column {
+  position: absolute;
+  right: -6px;
+  bottom: 375px;
+  float: left;
+  width: 33.3%;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 
 

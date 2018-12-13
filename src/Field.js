@@ -5,10 +5,13 @@ export default class Field extends React.Component{
 
     renderCell(i){
         let isActive = true;
-        if(!this.props.squares[i])isActive = false;
+        const {squares} = this.props;
+
+        if(!squares[i])isActive = false;
+
         return(
         <Cell 
-        vallue={this.props.squares[i]}
+        vallue={squares[i]}
         onClick={() => this.props.onClick(i)}
         isActive ={isActive}
         />

@@ -1,17 +1,53 @@
 import React, { Component } from 'react';
-import Data from './highscores.json';
 import crown from './crown.svg';
 import './App.css';
 
 export default class ScoreList extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            players: []
+        };
+    }
+
+    hydrateStateWithLocalStorage() {
+        // for all items in state
+        for (let key in this.state) {
+          // if the key exists in localStorage
+          if (localStorage.hasOwnProperty(key)) {
+            // get the key's value from localStorage
+            let value = localStorage.getItem(key);
+    
+            // parse the localStorage string and setState
+            try {
+              value = JSON.parse(value);
+              this.setState({ [key]: value });
+            } catch (e) {
+              // handle empty string
+              this.setState({ [key]: value });
+            }
+          }
+        }
+      }
+
+      
+
+      componentDidMount() {
+        this.hydrateStateWithLocalStorage();
+     }
+    
+     
+
     renderScores() {
+        const players = [...this.state.players];
+
         return (
-            Data.scores.sort((a, b) => { return a.score - b.score; }).map((item, i) => {
+            players.sort((a, b) => { return a.steps - b.steps; }).map((item, i) => {
                 return <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{item.name}</td>
-                    <td>{item.score}</td>
+                    <td>{item.steps}</td>
                 </tr>
             })
         );

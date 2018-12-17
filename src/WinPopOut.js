@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Data from './highscores.json';
 import { Animated } from "react-animated-css";
 
 export default class WinPopOut extends React.Component {
@@ -7,49 +6,136 @@ export default class WinPopOut extends React.Component {
         super(props);
         this.state = {
             name: '',
-            score: 0
+            steps: 0,
+            players: [],
         };
 
-        this.onPlayerChange = this.onPlayerChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onPlayerChange(event) {
-        this.setState({ player: event.target.value });
+    addPlayer() {
+        
+        const newPlayer = {
+          name: this.state.name,
+          steps: this.state.steps + 1
+        };
+
+        alert('A name was submitted: ' + newPlayer.name + ' ' + newPlayer.steps);
+    
+        let list = [...this.state.players];
+    
+        list.push(newPlayer);
+
+        this.setState({players: list,name: ''});
+      }
+
+    
+    hydrateStateWithLocalStorage() {
+        // for all items in state
+        for (let key in this.state) {
+          // if the key exists in localStorage
+          if (localStorage.hasOwnProperty(key)) {
+            // get the key's value from localStorage
+            let value = localStorage.getItem(key);
+    
+            // parse the localStorage string and setState
+            try {
+              value = JSON.parse(value);
+              this.setState({ [key]: value });
+            } catch (e) {
+              // handle empty string
+              this.setState({ [key]: value });
+            }
+          }
+        }
+      }
+    
+    hydrateScoreWithLocalStorege(){
+        let key = 'steps';
+        if (localStorage.hasOwnProperty(key)) {
+            // get the key's value from localStorage
+            let value = localStorage.getItem(key);
+    
+            // parse the localStorage string and setState
+            try {
+              value = JSON.parse(value);
+              this.setState({ [key]: value });
+            } catch (e) {
+              // handle empty string
+              this.setState({ [key]: value });
+            }
+          }
     }
 
-    onSubmit(event) {
-        event.preventDefault();
-        const {name,score} = this.state;
-        Data.scores.push(JSON.stringify({name,score},null,2));
+    saveStateToLocalStorage() {
+        // for every item in React state
+        for (let key in this.state) {
+          // save to localStorage
+          localStorage.setItem(key, JSON.stringify(this.state[key]));
+        }
+    }
+
+    handleChange(event) {
+        this.setState({ name: event.target.value });
+        this.hydrateScoreWithLocalStorege();
+    }
+
+    handleSubmit(event) {
+        this.addPlayer();
+        this.saveStateToLocalStorage();
+        this.props.onClick();
+        window.location.reload(false); 
     }
 
     componentDidMount(){
-        this.setState({steps: this.props.steps});
+        this.hydrateStateWithLocalStorage();
+
+        window.addEventListener(
+            "beforeunload",
+            this.saveStateToLocalStorage.bind(this)
+          );
     }
 
+    componentWillUnmount() {
+        window.removeEventListener(
+          "beforeunload",
+          this.saveStateToLocalStorage.bind(this)
+        );
+    
+        // saves if component has a chance to unmount
+        this.saveStateToLocalStorage();
+    }
+    
+    renderPopOut(){
+        if (this.props.isWin){
+            
+        return (
+            <Animated className='win-pop-out' animationIn="bounceInDown"
+             animationOut="fadeOut" isVisible={true}>
+                <div className = 'win-pop-out--text'> 
+                    You won!
+                </div>
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <p><label > Enter your name 
+                            <input className='win-pop-out--form--input'
+                             type="text" name="name" value={this.state.name}
+                            onChange={this.handleChange} /></label></p>
+                        <p><input className='win-pop-out--form--button'
+                             type="submit" value="Submit" /></p>
+                    </form>
+                </div>
+            </Animated>
+        );
+        }
+    }
 
     render() {
-
-        if (this.props.isWin) {
             return (
-                <Animated className='win-pop-out' animationIn="bounceInDown" animationOut="fadeOut" isVisible={true}>
-                    <div className = 'win-pop-out--text'> 
-                        You won!
-                    </div>
-                    <div>
-                        <form onSubmit={this.onSubmit.bind(this)}>
-                            <p><label > Enter your name <input className='win-pop-out--form--input' type="text" name="player" value={this.state.player}
-                                onChange={this.onPlayerChange} /></label></p>
-                            <p><input className='win-pop-out--form--button' type="submit" value="Submit" /></p>
-                        </form>
-                    </div>
-                </Animated>
-
+                <div>
+                {this.renderPopOut()}
+                </div>
             );
-        } else {
-            return (
-                <div></div>
-            );
-        }
     }
 }

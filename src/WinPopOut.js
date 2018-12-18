@@ -20,14 +20,12 @@ export default class WinPopOut extends React.Component {
           name: this.state.name,
           steps: this.state.steps + 1
         };
-
-        alert('A name was submitted: ' + newPlayer.name + ' ' + newPlayer.steps);
     
         let list = [...this.state.players];
     
         list.push(newPlayer);
 
-        this.setState({players: list,name: ''});
+        this.setState({players: list,name: '',steps: 0});
       }
 
     

@@ -63,7 +63,6 @@ export default class Puzzle extends React.Component{
       }
 
       componentDidMount() {
-        
         this.hydrateStateWithLocalStorage();
 
         window.addEventListener(
